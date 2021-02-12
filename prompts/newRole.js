@@ -18,7 +18,7 @@ async function newRole() {
     },
     {
       name: "departmentId",
-      message: "what deparment does this role belong to?",
+      message: "what department does this role belong to?",
       type: "list",
       choices: availableDepartments.map((department) => ({
         name: department.name,
