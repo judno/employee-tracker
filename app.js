@@ -4,7 +4,9 @@ const newRole = require("./prompts/newRole");
 const newEmployee = require("./prompts/newEmployee");
 const getAvailableDepartments = require("./sql/getAvailableDepartments");
 const getAvailableRoles = require("./sql/getAvailableRoles");
-const getAvailableEmployees = require("./sql/getAvailableEmployees");
+const updateEmployeeRole = require("./prompts/updateEmployeeRole");
+const viewEmployees = require("./sql/viewEmployees");
+const viewRole = require("./sql/viewRole");
 
 const ADD_NEW_DEPARTMENT = "Add New Department";
 const ADD_NEW_ROLE = "Add New Role";
@@ -12,23 +14,21 @@ const ADD_EMPLOYEE = "Add New Employee";
 const VIEW_DEPARTMENTS = "View Departments";
 const VIEW_ROLES = "View Roles";
 const VIEW_EMPLOYEES = "View Employees";
-//Add departments, roles, employees
-//view departments, roles, employees
-// Update employee roles
+const UPDATE_EMPLOYEE = "Update Employee Role";
+
 async function run() {
   const { action } = await inquirer.prompt({
     name: "action",
     message: "what would you like to do?",
     type: "list",
     choices: [
-      //create
       ADD_NEW_DEPARTMENT,
       ADD_NEW_ROLE,
       ADD_EMPLOYEE,
       VIEW_DEPARTMENTS,
       VIEW_ROLES,
       VIEW_EMPLOYEES,
-      "Update Employee Role",
+      UPDATE_EMPLOYEE,
     ],
   });
 
@@ -56,15 +56,19 @@ async function run() {
       return;
     }
     case VIEW_ROLES: {
-      const roles = await getAvailableRoles();
+      const roles = await viewRole();
       console.table(roles);
 
       return;
     }
     case VIEW_EMPLOYEES: {
-      const employee = await getAvailableEmployees();
-      console.table(employee);
+      const employees = await viewEmployees();
+      console.table(employees);
 
+      return;
+    }
+    case UPDATE_EMPLOYEE: {
+      await updateEmployeeRole();
       return;
     }
   }
