@@ -16,7 +16,7 @@ const VIEW_ROLES = "View Roles";
 const VIEW_EMPLOYEES = "View Employees";
 const UPDATE_EMPLOYEE = "Update Employee Role";
 
-async function run() {
+async function runAction() {
   const { action } = await inquirer.prompt({
     name: "action",
     message: "what would you like to do?",
@@ -73,4 +73,21 @@ async function run() {
     }
   }
 }
+
+async function run() {
+  let runAgain = true;
+
+  while (runAgain) {
+    await runAction();
+
+    const answers = await inquirer.prompt({
+      name: "runAgain",
+      message: "would you like to perform another action?",
+      type: "confirm",
+    });
+
+    runAgain = answers.runAgain;
+  }
+}
+
 run();

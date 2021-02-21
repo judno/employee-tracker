@@ -9,7 +9,6 @@ function runQuery(query) {
       database: "employee-tracker",
     });
 
-    console.log("Running query\n", query);
     connection.query(query, (err, result) => {
       connection.end();
 
